@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Here we want to style classes that are coming from leaflet. */
+.leaflet-popup .leaflet-popup-content-wrapper {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  width: 190px;
+  height: auto;
+  background-color: rgb(252, 252, 252);
+  color: rgb(70, 68, 68);
+  border-radius: 7px;
+}
+
+.leaflet-popup .leaflet-popup-content {
+  margin: 0;
+}
+
+.leaflet-popup .leaflet-popup-content p {
+  margin: 0;
+}
+
+.leaflet-popup .leaflet-popup-content-wrapper {
+  border-bottom: 5px solid rgb(43, 174, 218);
+}
+
+.leaflet-popup .leaflet-popup-tip {
+  background-color: rgb(10, 99, 10);
+}
+
+.form {
+  background-image: url("/h3.jpg");
+  background-size: cover; /* This will scale the image to cover the entire background */
+  background-repeat: no-repeat; /* This will prevent the image from repeating */
+  background-position: center center;
+}
+
+/* Tailwind CSS for responsive sticky position */
+@media (min-width: 640px) {
+  .sticky-top {
+    position: sticky;
+    top: 5rem;
+    margin-top: 3rem;
+    right: 10rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .sticky-top {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-top: 0;
+    right: 0;
+  }
+}
+
+/* LoadingSpinner.css */
+
+.spinner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white; /* Semi-transparent background */
+}
+
+.spinner {
+  border: 8px solid #f3f3f3; /* Light gray background color */
+  border-top: 8px solid #004d00; /* Dark green color */
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  max-width: 60px; /* Adjust this as needed */
+  max-height: 60px; /* Adjust this as needed */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* scrollbar.css */
+
+/* WebKit Browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #248f0e #f1f1f1;
+}
