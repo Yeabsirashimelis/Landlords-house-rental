@@ -1,3 +1,5 @@
+import home from "/home.mp4";
+
 function Homephoto() {
   return (
     <div>
@@ -6,7 +8,7 @@ function Homephoto() {
       "
       >
         <video className="object-cover w-full h-80" autoPlay muted loop>
-          <source src="/home.mp4" type="video/mp4" />
+          <source src={home} type="video/mp4" />
           {/* Fallback image for browsers that do not support the video tag */}
           <img
             src="/src/images/homebg.jfif"

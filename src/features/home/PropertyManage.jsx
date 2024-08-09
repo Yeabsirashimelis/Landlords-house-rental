@@ -1,3 +1,6 @@
+import img1 from "/src/images/property.jfif";
+import img2 from "/src/images/rented.jfif";
+
 function PropertyManage() {
   return (
     <div className="mt-16 pt-8 flex flex-col items-center justify-center border-t border-t-gray-200">
@@ -22,14 +25,14 @@ function PropertyManage() {
         </div>
         <div className="flex justify-center items-center">
           <img
-            src="src/images/property.jfif"
+            src={img1}
             className="object-contain w-full h-auto"
             alt="Advertise Your Rental"
           />
         </div>
         <div className="flex justify-center items-center">
           <img
-            src="src/images/rented.jfif"
+            src={img2}
             className="object-contain w-full h-auto"
             alt="Lease 100% Online"
           />

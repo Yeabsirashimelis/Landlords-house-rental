@@ -1,9 +1,11 @@
+import abtImage from "/src/images/aboutrent.jfif";
+
 function AboutRent() {
   return (
     <div className="w-[80%] mx-auto mt-12 lg:grid lg:grid-cols-2 lg:h-screen lg:gap-4">
       <div className="relative w-full h-96 lg:h-auto">
         <img
-          src="src\images\aboutrent.jfif"
+          src={abtImage}
           alt="About Rent"
           layout="fill"
           className="absolute inset-0 h-full w-full"

@@ -10,7 +10,7 @@ import {
 } from "react-share";
 
 function ShareBtns({ home }) {
-  const shareUrl = `http://localhost:5173/homesforrent/personalbuildings/${home.id}`;
+  const shareUrl = `https://landlords-house-rental.vercel.app//homesforrent/personalbuildings/${home.id}`;
 
   return (
     <div className="border border-gray-400 rounded-md mb-4">

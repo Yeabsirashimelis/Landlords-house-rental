@@ -2,9 +2,23 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { handleHouses } from "./handleHouses";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../ui/LoadingSpinner";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import markerRetina from "leaflet/dist/images/marker-icon-2x.png";
 
 function TheMap() {
   const { houses } = handleHouses(); //custom hook
+  const customIcon = new L.Icon({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerRetina,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
   if (!houses) return <LoadingSpinner />;
   return (
@@ -22,6 +36,7 @@ function TheMap() {
         <Marker
           position={[house.address.latitude, house.address.longitude]}
           key={house.id}
+          icon={customIcon}
         >
           <Popup>
             <div className="space-y-2">

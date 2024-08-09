@@ -1,6 +1,22 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import markerRetina from "leaflet/dist/images/marker-icon-2x.png";
 
 function DetailsNeghborhoodMap({ home }) {
+  const customIcon = new L.Icon({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerRetina,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
+
   return (
     <div className="h-[400px] w-full mt-4">
       <MapContainer
@@ -16,6 +32,7 @@ function DetailsNeghborhoodMap({ home }) {
         <Marker
           position={[home.address.latitude, home.address.longitude]}
           key={home.id}
+          icon={customIcon}
         >
           <Popup>
             <div>
