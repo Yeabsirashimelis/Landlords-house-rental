@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 import { useQuery } from "@tanstack/react-query";
 
-function RecentLists({ house, loading, error }) {
+function RecentLists({ house }) {
   const {
     id,
     title,
@@ -24,11 +24,6 @@ function RecentLists({ house, loading, error }) {
     isPetAllowed,
   } = house;
 
-  if (loading) return <LoadingSpinner />;
-  if (error)
-    return (
-      <p className="2xl text-red-800 text-center">Can not fetch RECENT LISTS</p>
-    );
   return (
     <div className="rounded-xl shadow-md relative">
       <img src={image[0]} alt="" className="w-full h-auto rounded-t-xl" />

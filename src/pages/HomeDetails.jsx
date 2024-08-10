@@ -113,7 +113,7 @@ export default function HomeDetails() {
       {isNavVisible && (
         <div
           ref={navRef}
-          className="sticky top-0 z-20 shadow-lg bg-gray-100 transition-transform duration-300"
+          className="invisible sm:visible sticky top-0 z-20 shadow-lg bg-gray-100 transition-transform duration-300"
         >
           <nav className="flex gap-4 justify-center px-4 h-[50px]">
             <button

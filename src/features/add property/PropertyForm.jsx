@@ -5,6 +5,7 @@ import { useState } from "react";
 function Form() {
   const { address, setAddress } = useHouses();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const userAddress = address.countryName
     ? `${address.locality}, ${address.city}, ${address.countryName}`
@@ -12,7 +13,7 @@ function Form() {
 
   function handleSubmit(e) {
     if (userAddress === "") {
-      setError("this field is required");
+      setError("This field is required");
       e.preventDefault();
       return;
     }
@@ -23,33 +24,39 @@ function Form() {
     e.preventDefault();
 
     const options = {
-      enableHighAccuracy: true, // Request high accuracy
-      timeout: 5000, // Timeout after 5 seconds*
-      maximumAge: 0, // No cached location
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
     };
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         getAddress(position.coords.latitude, position.coords.longitude);
       },
       (error) => {
         console.error("Error getting location:", error);
+        setError("Unable to retrieve your location. Please try again.");
       }
     );
   }
 
   async function getAddress(latitude, longitude) {
+    console.log(latitude, longitude);
     try {
+      setLoading(true);
+      setError(""); // Clear any previous error
       const res = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
       );
-      if (!res.ok) throw new Error("Failed getting address");
+      if (!res.ok) throw new Error("Failed to get address");
 
       const data = await res.json();
       setAddress(data);
     } catch (error) {
       console.error("Error fetching address:", error);
+      setError("Failed to retrieve address. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -97,8 +104,9 @@ function Form() {
           <button
             className="px-2 py-1 border rounded-md border-green-300"
             onClick={handleUserAddress}
+            disabled={loading}
           >
-            Get Address
+            {loading ? "Getting your address..." : "Get Address"}
           </button>
         </div>
       </div>

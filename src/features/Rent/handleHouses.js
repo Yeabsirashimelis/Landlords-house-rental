@@ -3,7 +3,7 @@ import { getHome } from "../../services/HouseApi";
 
 export function handleHouses() {
   const {
-    isLoading: isLoadingHomes,
+    isPending: isLoadingHomes,
     data: houses,
     error: loadingHomesError,
   } = useQuery({

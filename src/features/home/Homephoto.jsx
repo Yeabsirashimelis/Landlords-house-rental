@@ -1,13 +1,30 @@
+import React, { useState } from "react";
 import home from "/home.mp4";
 
 function Homephoto() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadedData = () => {
+    setIsLoading(false);
+  };
+
   return (
     <div>
-      <div
-        className="relative text-slate-200
-      "
-      >
-        <video className="object-cover w-full h-80" autoPlay muted loop>
+      <div className="relative text-slate-200">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Skeleton screen */}
+            <div className="bg-gray-700 w-full h-80 animate-pulse"></div>
+          </div>
+        )}
+
+        <video
+          className={`object-cover w-full h-80 ${isLoading ? "hidden" : ""}`}
+          autoPlay
+          muted
+          loop
+          onLoadedData={handleLoadedData}
+        >
           <source src={home} type="video/mp4" />
           {/* Fallback image for browsers that do not support the video tag */}
           <img

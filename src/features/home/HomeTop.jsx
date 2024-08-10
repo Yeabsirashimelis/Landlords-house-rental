@@ -49,7 +49,7 @@ function HomeTop() {
         <div className="h-full flex gap-4 items-center text-2xl px-4">
           <img src={logo} alt="logo" className="w-12 rounded-full" />
           <Link to="/home" className="hover:text-blue-600">
-            LandLords.com
+            LandLords House Rental
           </Link>
         </div>
 
@@ -127,7 +127,7 @@ function HomeTop() {
           >
             <img src={logo} alt="logo" className="w-12 rounded-full" />
             <Link to="/home" className="hover:text-blue-600">
-              LandLords.com
+              LandLords House Rental
             </Link>
           </div>
           <div
