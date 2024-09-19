@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import home from "/home.mp4";
+import LoadingSpinner from "../../ui/LoadingSpinner";
 
 function Homephoto() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +20,7 @@ function Homephoto() {
         )}
 
         <video
-          className={`object-cover w-full h-80 ${isLoading ? "hidden" : ""}`}
+          className={`object-cover w-full h-80`}
           autoPlay
           muted
           loop
@@ -34,6 +35,25 @@ function Homephoto() {
           />
           Your browser does not support the video tag.
         </video>
+
+        {isLoading && (
+          <div
+            className="spinner-overlay"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 2, // Make sure the spinner is on top
+            }}
+          >
+            <LoadingSpinner />
+          </div>
+        )}
 
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <p className="text-4xl sm:text-5xl font-extrabold">

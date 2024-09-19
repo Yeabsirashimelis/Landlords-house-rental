@@ -7,7 +7,6 @@ const HouseContext = createContext();
 function HouseProvider({ children }) {
   const [address, setAddress] = useState({});
 
-  // No useQuery here. Instead, use it in the component.
   return (
     <HouseContext.Provider value={{ address, setAddress }}>
       {children}
