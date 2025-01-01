@@ -127,7 +127,7 @@ function HomeTop() {
           >
             <img src={logo} alt="logo" className="w-12 rounded-full" />
             <Link to="/home" className="hover:text-blue-600">
-              LandLords House Rental
+              Agenagn
             </Link>
           </div>
           <div
