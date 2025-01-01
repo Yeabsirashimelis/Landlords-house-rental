@@ -13,14 +13,14 @@ function RentalNavs() {
         >
           Personal Houses
         </Link>
-        <div className="font-light">
+{/*         <div className="font-light">
           <Link
             to="/homesforrent/realestates"
             className="font-bold hover:text-blue-600 hover:underline transition duration-200"
           >
             Real Estates
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
