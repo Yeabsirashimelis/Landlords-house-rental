@@ -1,25 +1,21 @@
-import { useEffect, useRef } from "react";
-import AboutRent from "../features/home/AboutRent";
-import Explores from "../features/home/Explores";
-import HomeBottom from "../features/home/HomeBottom";
-import HomeTop from "../features/home/HomeTop";
-import Homephoto from "../features/home/Homephoto";
-import PropertyManage from "../features/home/PropertyManage";
-import TipsForRenters from "../features/home/TipsForRenters";
-import Footer from "../ui/Footer";
+import Footer from "@/ui/Footer";
+import AboutSection from "../features/home/about-section";
+import CompanyStory from "../features/home/company-story";
+import HeroSection from "../features/home/hero-section";
+import PropertyManagement from "../features/home/property-management";
+import RecentProperties from "../features/home/recent-properties";
+import TipsSection from "../features/home/tips-section";
 
-function Home() {
+export default function Home() {
   return (
-    <div className=" text-gray-600 ">
-      <Homephoto />
-      <Explores />
-      <AboutRent />
-      <PropertyManage />
-      <HomeBottom />
-      <TipsForRenters />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <HeroSection />
+      <RecentProperties />
+      <AboutSection />
+      <PropertyManagement />
+      <CompanyStory />
+      <TipsSection />
       <Footer />
     </div>
   );
 }
-
-export default Home;

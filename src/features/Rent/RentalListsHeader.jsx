@@ -9,7 +9,7 @@ function RentalListsHeader() {
 
   if (isLoading) return <p>loading</p>;
   return (
-    <div className="bg-gray-50 py-2">
+    <div className="py-2 text-gray-900 bg-gray-50">
       <p>{data.count} Houses found for Rent</p>
     </div>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   faHorseHead,
   faBars,
@@ -16,7 +18,7 @@ function HomeTop() {
   const [rentalNavsOpen, setRentalNavsOpen] = useState(false);
   const [manageRentalsNavsOpen, setManageRentalsNavsOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const { user, signOut } = useAuth(); // Destructure user and signOut from the context
+  const { user, signOut } = useAuth();
 
   function handleCloseNavs() {
     setMobileNavOpen(false);
@@ -29,7 +31,7 @@ function HomeTop() {
         text-gray-800 bg-white font-semibold h-[55px] border-b border-gray-200 shadow-sm"
       >
         <div
-          className="h-full flex items-center hover:bg-gray-100 px-4 transition duration-200"
+          className="flex items-center h-full px-4 transition duration-200 hover:bg-gray-100"
           onMouseEnter={() => setRentalNavsOpen(true)}
           onMouseLeave={() => setRentalNavsOpen(false)}
         >
@@ -46,15 +48,19 @@ function HomeTop() {
           )}
         </div>
 
-        <div className="h-full flex gap-4 items-center text-2xl px-4">
-          <img src={logo} alt="logo" className="w-12 rounded-full" />
+        <div className="flex items-center h-full gap-4 px-4 text-2xl">
+          <img
+            src={logo || "/placeholder.svg"}
+            alt="logo"
+            className="w-12 rounded-full"
+          />
           <Link to="/home" className="hover:text-blue-600">
             Agenagn
           </Link>
         </div>
 
         <div
-          className="relative h-full flex items-center hover:bg-gray-100 px-4 transition duration-200"
+          className="relative flex items-center h-full px-4 transition duration-200 hover:bg-gray-100"
           onMouseEnter={() => setManageRentalsNavsOpen(true)}
           onMouseLeave={() => setManageRentalsNavsOpen(false)}
         >
@@ -69,11 +75,11 @@ function HomeTop() {
           )}
         </div>
 
-        <div className="flex gap-4 items-center px-4">
+        <div className="flex items-center gap-4 px-4">
           {user ? (
             <>
               <Link to="/user/myAccount">
-                <div className="bg-red-600 rounded-full p-2 hover:bg-red-700 transition duration-200">
+                <div className="p-2 transition duration-200 bg-red-600 rounded-full hover:bg-red-700">
                   <FontAwesomeIcon
                     icon={faHorseHead}
                     style={{ height: "25px", color: "whitesmoke" }}
@@ -83,7 +89,7 @@ function HomeTop() {
 
               <button
                 onClick={signOut}
-                className="bg-red-500 text-sm rounded-md text-white px-2 py-1 hover:bg-red-600 transition duration-200"
+                className="px-2 py-1 text-sm text-white transition duration-200 bg-red-500 rounded-md hover:bg-red-600"
               >
                 Sign Out
               </button>
@@ -91,7 +97,7 @@ function HomeTop() {
           ) : (
             <Link
               to="/signin"
-              className="bg-blue-500 text-sm rounded-md text-white px-2 py-1 hover:bg-blue-600 transition duration-200"
+              className="px-2 py-1 text-sm text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600"
             >
               Sign In
             </Link>
@@ -101,7 +107,7 @@ function HomeTop() {
 
       <div className="flex md:hidden bg-gray-100 z-[1000] shadow-2xl justify-between items-center">
         <button
-          className="   py-2 items-center px-4"
+          className="items-center px-4 py-2 "
           onClick={() => setMobileNavOpen(!mobileNavOpen)}
         >
           <FontAwesomeIcon
@@ -111,8 +117,7 @@ function HomeTop() {
         </button>
         <Link
           to="/add-property"
-          className="flex items-center space-x-2 mr-12
-          hover:text-blue-600 transition duration-200"
+          className="flex items-center mr-12 space-x-2 transition duration-200 hover:text-blue-600"
         >
           <FontAwesomeIcon icon={faAdd} />
           <p>Add Property</p>
@@ -120,12 +125,16 @@ function HomeTop() {
       </div>
 
       {mobileNavOpen && (
-        <div className="md:hidden  bg-white text-gray-800">
+        <div className="text-gray-800 bg-white md:hidden">
           <div
-            className="h-full flex gap-4 items-center text-2xl px-4"
+            className="flex items-center h-full gap-4 px-4 text-2xl"
             onClick={handleCloseNavs}
           >
-            <img src={logo} alt="logo" className="w-12 rounded-full" />
+            <img
+              src={logo || "/placeholder.svg"}
+              alt="logo"
+              className="w-12 rounded-full"
+            />
             <Link to="/home" className="hover:text-blue-600">
               Agenagn
             </Link>
@@ -159,7 +168,7 @@ function HomeTop() {
                 </Link>
                 <button
                   onClick={signOut}
-                  className="block bg-red-500 text-white rounded-md px-4 py-2 w-full"
+                  className="block w-full px-4 py-2 text-white bg-red-500 rounded-md"
                 >
                   Sign Out
                 </button>
@@ -167,7 +176,7 @@ function HomeTop() {
             ) : (
               <Link
                 to="/signin"
-                className="block bg-blue-500 text-white rounded-md px-4 py-2 w-full"
+                className="block w-full px-4 py-2 text-white bg-blue-500 rounded-md"
               >
                 Sign In
               </Link>

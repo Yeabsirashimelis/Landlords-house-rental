@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { handleHouses } from "./handleHouses";
 import { Link } from "react-router-dom";
@@ -20,48 +23,82 @@ function TheMap() {
     shadowSize: [41, 41],
   });
 
-  if (!houses) return <LoadingSpinner />;
+  if (!houses)
+    return (
+      <div className="flex items-center justify-center h-full bg-gradient-to-br from-green-50 to-blue-50">
+        <LoadingSpinner />
+      </div>
+    );
+
   return (
-    <MapContainer
-      center={[8.7575, 38.9941]}
-      zoom={7}
-      className="sm:h-full h-96  w-full"
+    <motion.div
+      initial={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="relative h-full"
     >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      />
+      <div className="absolute top-4 left-4 z-[1000] bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+        <span className="text-sm font-semibold text-gray-700">
+          {houses.length} Properties Available
+        </span>
+      </div>
 
-      {houses.map((house) => (
-        <Marker
-          position={[house.address.latitude, house.address.longitude]}
-          key={house.id}
-          icon={customIcon}
-        >
-          <Popup>
-            <div className="space-y-2">
-              <div className="space-y-1 text-base px-2 py-1 ">
-                <p className="font-bold">{house.title}</p>
-                <p> {house.bedRooms} Beds</p>
-                <p> {house.price} Birr</p>
-              </div>
-              <div className="text-sm flex justify-around border-t  h-[25px] items-center border-t-gray-400">
-                <p>{house.phoneNumber}</p>
-                <div className=" w-px h-full bg-gray-400 "></div>
+      <MapContainer
+        center={[8.7575, 38.9941]}
+        zoom={7}
+        className="w-full sm:h-full h-96"
+        style={{ borderRadius: "1rem" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        />
 
-                <Link
-                  to={`${house.id}`}
-                  className="text-base text-blue-400 hover:text-blue-500
-                  transition-full duration-200"
-                >
-                  see more
-                </Link>
+        {houses.map((house) => (
+          <Marker
+            position={[house.address.latitude, house.address.longitude]}
+            key={house.id}
+            icon={customIcon}
+          >
+            <Popup className="custom-popup">
+              <div className="p-2 space-y-3">
+                <div className="space-y-2 text-base">
+                  <h3 className="pb-2 text-lg font-bold text-gray-800 border-b border-gray-200">
+                    {house.title}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-1">
+                      <span className="text-blue-500">🛏️</span>
+                      <span>{house.bedRooms} Beds</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-green-500">💰</span>
+                      <span className="font-semibold text-green-600">
+                        {house.price} Birr
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                    <span className="text-blue-500">📞</span>
+                    <span>{house.phoneNumber}</span>
+                  </div>
+
+                  <Link
+                    to={`${house.id}`}
+                    className="px-4 py-2 text-sm font-medium text-white transition-all duration-200 transform rounded-full shadow-md bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:shadow-lg hover:scale-105"
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
-            </div>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </motion.div>
   );
 }
 
