@@ -4,7 +4,7 @@ import PropertyForm from "../features/add property/PropertyForm";
 
 function AddProperty() {
   return (
-    <div className="flex flex-col space-y-6 justify-center  bg-gray-100 px-6 sm:px-12 py-6">
+    <div className="flex flex-col justify-center px-6 py-6 space-y-6 bg-gray-100 sm:px-12">
       <AddPropertyHeader />
       <PropertyForm />
     </div>

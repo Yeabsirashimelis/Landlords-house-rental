@@ -55,7 +55,7 @@ function HomeTop() {
             className="w-12 rounded-full"
           />
           <Link to="/home" className="hover:text-blue-600">
-            Agenagn
+            Landlords.com
           </Link>
         </div>
 
@@ -136,7 +136,7 @@ function HomeTop() {
               className="w-12 rounded-full"
             />
             <Link to="/home" className="hover:text-blue-600">
-              Agenagn
+              Landlords.com
             </Link>
           </div>
           <div

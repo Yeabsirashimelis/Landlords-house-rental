@@ -1,20 +1,19 @@
+"use client";
+
 import { Outlet } from "react-router-dom";
 import HomeTop from "../features/home/HomeTop";
 
-function AppLayOut() {
+function AppLayout() {
   return (
-    <div className="grid grid-rows-[auto,1fr] h-screen overflow-hidden">
-      <div>
-        <HomeTop />
-      </div>
-
-      <div className="overflow-hidden">
-        <main className="h-full mx-auto overflow-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
+      <HomeTop />
+      <main className="min-h-screen pt-20">
+        <div className="mx-auto max-w-7xl">
           <Outlet />
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   );
 }
 
-export default AppLayOut;
+export default AppLayout;

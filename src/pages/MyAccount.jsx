@@ -1,15 +1,15 @@
+"use client";
+
 import AccountMain from "../features/account/AccountMain";
 import AccountTop from "../features/account/AccountTop";
-import DeleteAccount from "../features/account/DeleteAccount";
 
-function myAccount() {
+function MyAccount() {
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <AccountTop />
       <AccountMain />
-      <DeleteAccount />
-    </>
+    </div>
   );
 }
 
-export default myAccount;
+export default MyAccount;
