@@ -6,7 +6,7 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import markerRetina from "leaflet/dist/images/marker-icon-2x.png";
 
-function DetailsNeghborhoodMap({ home }) {
+function DetailsNeighborhoodMap({ home }) {
   const customIcon = new L.Icon({
     iconUrl: markerIcon,
     iconRetinaUrl: markerRetina,
@@ -18,7 +18,7 @@ function DetailsNeghborhoodMap({ home }) {
   });
 
   return (
-    <div className="h-[400px] w-full mt-4">
+    <div className="h-[400px] w-full mt-6 rounded-2xl overflow-hidden shadow-xl border border-gray-200">
       <MapContainer
         center={[home.address.latitude, home.address.longitude]}
         zoom={19}
@@ -35,8 +35,12 @@ function DetailsNeghborhoodMap({ home }) {
           icon={customIcon}
         >
           <Popup>
-            <div>
-              <img src={home?.image[11] || home.image[0]} />
+            <div className="p-2">
+              <img
+                src={home?.image[11] || home.image[0]}
+                className="h-auto rounded-lg max-w-48"
+                alt="Property"
+              />
             </div>
           </Popup>
         </Marker>
@@ -45,4 +49,4 @@ function DetailsNeghborhoodMap({ home }) {
   );
 }
 
-export default DetailsNeghborhoodMap;
+export default DetailsNeighborhoodMap;

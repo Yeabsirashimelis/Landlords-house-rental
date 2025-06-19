@@ -3,6 +3,7 @@ import { getNearByInfos } from "../../services/DetailsApi";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 import NeighborhoodDetails from "./NeighborhoodDetails";
 import DetailsNeghborhoodMap from "./DetailsNeghborhoodMap";
+import { MapPin } from "lucide-react";
 
 function NeighBourhood({ home }) {
   const { address } = home;
@@ -29,23 +30,36 @@ function NeighBourhood({ home }) {
   const infosPerCategory = nearByInfos ? categorieNearByInfos(nearByInfos) : [];
 
   if (isLoadingInfos) return <LoadingSpinner />;
+
   return (
-    <div className=" mx-auto  px-12 mt-12 bg-gray-50 py-8">
-      <h2 className="text-xl font-bold  ">NEIGHBORHOOD</h2>
-      <DetailsNeghborhoodMap home={home} />
-      <p
-        className="text-blue-500 font-bold border border-blue-500
-       px-2 py-1 flex justify-center mt-12"
-      >
-        In 3 km radius from this house
-      </p>
-      {Object.entries(infosPerCategory).map(([category, nearByInfos]) => (
-        <NeighborhoodDetails
-          category={category}
-          nearByInfos={nearByInfos}
-          key={category}
-        />
-      ))}
+    <div className="px-6 mx-auto mt-16 max-w-7xl">
+      <div className="p-8 border border-gray-200 shadow-lg bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="p-3 bg-blue-600 shadow-lg rounded-xl">
+            <MapPin className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-800">NEIGHBORHOOD</h2>
+        </div>
+
+        <DetailsNeghborhoodMap home={home} />
+
+        <div className="mt-8 text-center">
+          <div className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white bg-blue-600 rounded-full shadow-lg">
+            <MapPin className="w-5 h-5" />
+            <span>Within 3 km radius from this house</span>
+          </div>
+        </div>
+
+        <div className="mt-8 space-y-8">
+          {Object.entries(infosPerCategory).map(([category, nearByInfos]) => (
+            <NeighborhoodDetails
+              category={category}
+              nearByInfos={nearByInfos}
+              key={category}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

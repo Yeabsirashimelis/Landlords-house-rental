@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHouses } from "../../contexts/HousesContext";
@@ -6,6 +8,22 @@ import { createHome } from "../../services/HouseApi";
 import { useAuth } from "../../contexts/AuthContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Home,
+  Ruler,
+  FileText,
+  DollarSign,
+  Heart,
+  FileCheck,
+  Camera,
+  Calendar,
+  Star,
+  Phone,
+  Loader2,
+  Check,
+} from "lucide-react";
 
 const days = [
   "Mondays",
@@ -38,6 +56,32 @@ const features = [
   "jacuzzi",
 ];
 
+const stepIcons = [
+  Home,
+  Ruler,
+  FileText,
+  DollarSign,
+  Heart,
+  FileCheck,
+  Camera,
+  Calendar,
+  Star,
+  Phone,
+];
+
+const stepTitles = [
+  "Property Title",
+  "Property Size",
+  "Description",
+  "Pricing",
+  "Pet Policy",
+  "Lease Terms",
+  "Media Upload",
+  "Availability",
+  "Features",
+  "Contact Info",
+];
+
 function MainPropertyForm() {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
@@ -46,7 +90,7 @@ function MainPropertyForm() {
   const { address } = useHouses();
   const { user } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 9;
+  const totalPages = 10;
 
   useEffect(() => {
     if (!address.countryName) {
@@ -102,264 +146,465 @@ function MainPropertyForm() {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
+  const StepIcon = stepIcons[currentPage - 1];
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols(auto, 1fr,auto) space-y-8 text-gray-700 h-screen bg-gray-100"
-    >
-      <h2 className="bg-green-900 font-extralight h-16 flex justify-center items-center text-xl px-2 py-8 text-center text-gray-50">
-        Let's start creating your listing
-      </h2>
-      <div className="space-y-8 flex flex-col justify-center w-[100%] sm:w-[80%] md:w-[70%] lg:w-[50%] mx-auto">
-        {currentPage === 1 && (
-          <div className="flex flex-col items-center gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <label htmlFor="title">Give your property a Title / Name</label>
-            <input
-              {...register("title")}
-              className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-              type="text"
-              id="title"
-              required
-            />
-          </div>
-        )}
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+      {/* Header */}
+      <div className="shadow-lg bg-gradient-to-r from-emerald-600 to-teal-600">
+        <div className="max-w-4xl px-6 py-8 mx-auto">
+          <h1 className="text-2xl font-bold text-center text-white">
+            Create Your Property Listing
+          </h1>
 
-        {currentPage === 2 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">
-              Add or review details about your property's size.
-            </h2>
-
-            <div className="flex flex-col gap-1 mt-4">
-              <label htmlFor="squareFeet">Square Footage</label>
-              <input
-                {...register("squareFeet")}
-                className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-                type="text"
-                id="squareFeet"
-                required
-              />
+          {/* Progress Bar */}
+          <div className="mt-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-emerald-100">
+                Step {currentPage} of {totalPages}
+              </span>
+              <span className="text-sm font-medium text-emerald-100">
+                {Math.round((currentPage / totalPages) * 100)}% Complete
+              </span>
             </div>
-
-            <div className="flex flex-col gap-1 mt-4">
-              <label htmlFor="bedRooms">Total bedrooms</label>
-              <input
-                {...register("bedRooms")}
-                className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-                type="text"
-                id="bedRooms"
-                required
-              />
-            </div>
-
-            <div className="flex flex-col gap-1 mt-4">
-              <label htmlFor="bathRooms">Total bathrooms</label>
-              <input
-                {...register("bathRooms")}
-                className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-                type="text"
-                id="bathRooms"
-                required
-              />
+            <div className="w-full h-2 rounded-full bg-emerald-500/30">
+              <div
+                className="h-2 transition-all duration-500 ease-out bg-white rounded-full"
+                style={{ width: `${(currentPage / totalPages) * 100}%` }}
+              ></div>
             </div>
           </div>
-        )}
+        </div>
+      </div>
 
-        {currentPage === 3 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">Describe the property</h2>
-            <p>
-              Write several sentences describing the upgrades and desirable
-              features that will attract renters to your property.
-            </p>
-            <textarea
-              {...register("description")}
-              className="outline-none focus:ring text-sm focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-2 h-48 rounded-md"
-              type="text"
-              placeholder="Example: Freshly painted home with new appliances and carpeting. Easy walking to public transit and a great neighborhood."
-              required
-            />
-          </div>
-        )}
-
-        {currentPage === 4 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">How much is the monthly rent?</h2>
-            <label htmlFor="price" className="text-sm">
-              Monthly rent in birr
-            </label>
-            <input
-              {...register("price")}
-              className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-              type="text"
-              id="price"
-              required
-            />
-          </div>
-        )}
-
-        {currentPage === 5 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">What's your pet policy?</h2>
-            <div className="items-center space-x-2">
-              <input
-                {...register("isPetAllowed")}
-                type="radio"
-                id="petsAllowed"
-                value="true"
-                name="isPetAllowed"
-                required
-              />
-              <label htmlFor="petsAllowed">Pets allowed</label>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-4xl px-6 py-12 mx-auto"
+      >
+        {/* Step Indicator */}
+        <div className="flex items-center justify-center mb-8">
+          <div className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-100 rounded-full shadow-lg">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500">
+              <StepIcon className="w-5 h-5 text-white" />
             </div>
-
-            <div className="items-center space-x-2">
-              <input
-                {...register("isPetAllowed")}
-                type="radio"
-                value="false"
-                id="petsNotAllowed"
-                name="isPetAllowed"
-                required
-              />
-              <label htmlFor="petsNotAllowed">Pets not allowed</label>
-            </div>
+            <span className="font-semibold text-gray-800">
+              {stepTitles[currentPage - 1]}
+            </span>
           </div>
-        )}
-
-        {currentPage === 6 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">
-              What should renters know about the lease terms?
-            </h2>
-            <p>
-              Share details that can be deal breakers, or deal makers, for
-              renters.
-            </p>
-            <textarea
-              {...register("leaseTerms")}
-              className="outline-none focus:ring text-sm focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-2 h-48 rounded-md"
-              type="text"
-              placeholder="Example: Owner pays for water. Renter is responsible for gas and electric. No smoking allowed. Small pets (up to 10kg) are allowed."
-              required
-            />
-          </div>
-        )}
-        {currentPage === 7 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">Media</h2>
-            <p>Insert high quality photos of your property</p>
-            <p className="text-sm mt-2 text-green-700">
-              Enter as many photos as you can. Please capture the photo of each
-              and every room of the house from a better angle. Any additional
-              things like a swimming pool and garden, backyard, or something
-              like those.
-            </p>
-
-            <input
-              {...register("image")}
-              className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-              type="file"
-              multiple
-            />
-          </div>
-        )}
-
-        {currentPage === 8 && (
-          <div className="flex flex-col gap-2 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">
-              When are you available to show the property?
-            </h2>
-            <label htmlFor="day" className="text-sm">
-              Select your availability.
-            </label>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {days.map((day) => (
-                <button
-                  key={day}
-                  type="button"
-                  className={`px-4 py-2 rounded-md cursor-pointer ${
-                    selectedDays.includes(day)
-                      ? "bg-green-500 text-white"
-                      : "bg-gray-300 text-black"
-                  }`}
-                  onClick={() => handleDayClick(day)}
-                >
-                  {day}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {currentPage === 9 && (
-          <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-            <h2 className="font-bold text-lg">Additional Features</h2>
-            <p>Select any additional features that apply to your property:</p>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {features.map((feature) => (
-                <button
-                  key={feature}
-                  type="button"
-                  className={`px-4 py-2 rounded-md cursor-pointer ${
-                    selectedFeatures.includes(feature)
-                      ? "bg-green-500 text-white"
-                      : "bg-gray-300 text-black"
-                  }`}
-                  onClick={() => handleFeatureClick(feature)}
-                >
-                  {feature}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-1 px-16 py-16 bg-white rounded-md shadow-md">
-          <h2 className="font-bold text-lg">Contact Information</h2>
-          <label htmlFor="phoneNumber" className="text-sm">
-            Phone Number
-          </label>
-          <input
-            {...register("phoneNumber")}
-            className="outline-none focus:ring focus:ring-green-900 focus:ring-offset-1 w-full bg-gray-50 border border-green-400 px-2 py-1 rounded-md"
-            type="text"
-            id="phoneNumber"
-            required
-          />
         </div>
 
-        <div className="flex justify-between mt-4">
-          {currentPage > 1 && (
-            <button
-              type="button"
-              onClick={handlePrevious}
-              className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-            >
-              Previous
-            </button>
-          )}
-          {currentPage < totalPages && (
+        {/* Form Content */}
+        <div className="overflow-hidden bg-white border border-gray-100 shadow-xl rounded-3xl">
+          <div className="p-8 md:p-12">
+            {currentPage === 1 && (
+              <div className="space-y-6 text-center">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                  <Home className="w-8 h-8 text-emerald-600" />
+                </div>
+                <div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Give your property a name
+                  </h2>
+                  <p className="text-gray-600">
+                    Choose a catchy title that will attract potential renters
+                  </p>
+                </div>
+                <div className="max-w-md mx-auto">
+                  <input
+                    {...register("title")}
+                    className="w-full px-6 py-4 text-lg font-medium text-center text-gray-800 transition-all duration-200 border-2 border-gray-200 bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                    type="text"
+                    placeholder="e.g., Cozy Downtown Apartment"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
+            {currentPage === 2 && (
+              <div className="space-y-8">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                    <Ruler className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Property Size Details
+                  </h2>
+                  <p className="text-gray-600">
+                    Add or review details about your property's size
+                  </p>
+                </div>
+
+                <div className="grid max-w-2xl gap-6 mx-auto md:grid-cols-3">
+                  <div className="space-y-3">
+                    <label
+                      htmlFor="squareFeet"
+                      className="block text-sm font-semibold text-gray-700"
+                    >
+                      Square Footage
+                    </label>
+                    <input
+                      {...register("squareFeet")}
+                      className="w-full px-4 py-3 transition-all duration-200 border-2 border-gray-200 bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                      type="text"
+                      id="squareFeet"
+                      placeholder="e.g., 1200"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <label
+                      htmlFor="bedRooms"
+                      className="block text-sm font-semibold text-gray-700"
+                    >
+                      Bedrooms
+                    </label>
+                    <input
+                      {...register("bedRooms")}
+                      className="w-full px-4 py-3 transition-all duration-200 border-2 border-gray-200 bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                      type="text"
+                      id="bedRooms"
+                      placeholder="e.g., 2"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <label
+                      htmlFor="bathRooms"
+                      className="block text-sm font-semibold text-gray-700"
+                    >
+                      Bathrooms
+                    </label>
+                    <input
+                      {...register("bathRooms")}
+                      className="w-full px-4 py-3 transition-all duration-200 border-2 border-gray-200 bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                      type="text"
+                      id="bathRooms"
+                      placeholder="e.g., 1.5"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentPage === 3 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                    <FileText className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Describe Your Property
+                  </h2>
+                  <p className="max-w-2xl mx-auto text-gray-600">
+                    Write several sentences describing the upgrades and
+                    desirable features that will attract renters to your
+                    property
+                  </p>
+                </div>
+                <div className="max-w-3xl mx-auto">
+                  <textarea
+                    {...register("description")}
+                    className="w-full px-6 py-4 transition-all duration-200 border-2 border-gray-200 resize-none bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                    rows={8}
+                    placeholder="Example: Freshly painted home with new appliances and carpeting. Easy walking to public transit and a great neighborhood. Features include hardwood floors, updated kitchen with granite countertops, and a private balcony with city views."
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
+            {currentPage === 4 && (
+              <div className="space-y-6 text-center">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                  <DollarSign className="w-8 h-8 text-emerald-600" />
+                </div>
+                <div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Monthly Rent
+                  </h2>
+                  <p className="text-gray-600">Set your monthly rental price</p>
+                </div>
+                <div className="max-w-sm mx-auto">
+                  <div className="relative">
+                    <span className="absolute text-lg font-semibold text-gray-500 transform -translate-y-1/2 left-4 top-1/2">
+                      ETB
+                    </span>
+                    <input
+                      {...register("price")}
+                      className="w-full py-4 pl-16 pr-6 text-lg font-semibold text-center text-gray-800 transition-all duration-200 border-2 border-gray-200 bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                      type="text"
+                      placeholder="15,000"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentPage === 5 && (
+              <div className="space-y-8 text-center">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                  <Heart className="w-8 h-8 text-emerald-600" />
+                </div>
+                <div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Pet Policy
+                  </h2>
+                  <p className="text-gray-600">
+                    What's your policy regarding pets?
+                  </p>
+                </div>
+                <div className="flex flex-col justify-center max-w-md gap-4 mx-auto sm:flex-row">
+                  <label className="flex-1 cursor-pointer">
+                    <input
+                      {...register("isPetAllowed")}
+                      type="radio"
+                      value="true"
+                      name="isPetAllowed"
+                      className="sr-only"
+                      required
+                    />
+                    <div className="p-6 transition-all duration-200 border-2 border-gray-200 rounded-xl hover:border-emerald-500 peer-checked:border-emerald-500 peer-checked:bg-emerald-50">
+                      <div className="text-center">
+                        <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 rounded-full bg-emerald-100">
+                          <Check className="w-6 h-6 text-emerald-600" />
+                        </div>
+                        <span className="font-semibold text-gray-800">
+                          Pets Allowed
+                        </span>
+                      </div>
+                    </div>
+                  </label>
+
+                  <label className="flex-1 cursor-pointer">
+                    <input
+                      {...register("isPetAllowed")}
+                      type="radio"
+                      value="false"
+                      name="isPetAllowed"
+                      className="sr-only"
+                      required
+                    />
+                    <div className="p-6 transition-all duration-200 border-2 border-gray-200 rounded-xl hover:border-emerald-500 peer-checked:border-emerald-500 peer-checked:bg-emerald-50">
+                      <div className="text-center">
+                        <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-red-100 rounded-full">
+                          <span className="text-xl font-bold text-red-600">
+                            ×
+                          </span>
+                        </div>
+                        <span className="font-semibold text-gray-800">
+                          No Pets
+                        </span>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {currentPage === 6 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                    <FileCheck className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Lease Terms
+                  </h2>
+                  <p className="max-w-2xl mx-auto text-gray-600">
+                    Share details that can be deal breakers, or deal makers, for
+                    renters
+                  </p>
+                </div>
+                <div className="max-w-3xl mx-auto">
+                  <textarea
+                    {...register("leaseTerms")}
+                    className="w-full px-6 py-4 transition-all duration-200 border-2 border-gray-200 resize-none bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                    rows={8}
+                    placeholder="Example: Owner pays for water. Renter is responsible for gas and electric. No smoking allowed. Small pets (up to 10kg) are allowed. 12-month lease minimum. Security deposit equal to one month's rent."
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
+            {currentPage === 7 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                    <Camera className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Property Photos
+                  </h2>
+                  <p className="text-gray-600">
+                    Upload high-quality photos of your property
+                  </p>
+                </div>
+                <div className="max-w-2xl mx-auto">
+                  <div className="p-8 text-center transition-all duration-200 border-2 border-gray-300 border-dashed bg-gray-50 rounded-xl hover:border-emerald-500">
+                    <Camera className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <input
+                      {...register("image")}
+                      className="w-full"
+                      type="file"
+                      multiple
+                      accept="image/*"
+                    />
+                  </div>
+                  <div className="p-4 mt-4 border rounded-lg bg-emerald-50 border-emerald-200">
+                    <p className="text-sm font-medium text-emerald-700">
+                      📸 Pro tip: Upload photos of each room from the best
+                      angles. Include any special features like pools, gardens,
+                      or outdoor spaces.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentPage === 8 && (
+              <div className="space-y-8">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                    <Calendar className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Availability Schedule
+                  </h2>
+                  <p className="text-gray-600">
+                    When are you available to show the property?
+                  </p>
+                </div>
+                <div className="max-w-3xl mx-auto">
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-7">
+                    {days.map((day) => (
+                      <button
+                        key={day}
+                        type="button"
+                        className={`p-4 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 ${
+                          selectedDays.includes(day)
+                            ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
+                        onClick={() => handleDayClick(day)}
+                      >
+                        {day.slice(0, 3)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentPage === 9 && (
+              <div className="space-y-8">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                    <Star className="w-8 h-8 text-emerald-600" />
+                  </div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Additional Features
+                  </h2>
+                  <p className="text-gray-600">
+                    Select any additional features that apply to your property
+                  </p>
+                </div>
+                <div className="max-w-4xl mx-auto">
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+                    {features.map((feature) => (
+                      <button
+                        key={feature}
+                        type="button"
+                        className={`p-4 rounded-xl font-medium capitalize transition-all duration-200 transform hover:scale-105 ${
+                          selectedFeatures.includes(feature)
+                            ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        }`}
+                        onClick={() => handleFeatureClick(feature)}
+                      >
+                        {feature}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {currentPage === 10 && (
+              <div className="space-y-6 text-center">
+                <div className="flex items-center justify-center w-16 h-16 mx-auto bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl">
+                  <Phone className="w-8 h-8 text-emerald-600" />
+                </div>
+                <div>
+                  <h2 className="mb-2 text-2xl font-bold text-gray-900">
+                    Contact Information
+                  </h2>
+                  <p className="text-gray-600">
+                    How can interested renters reach you?
+                  </p>
+                </div>
+                <div className="max-w-sm mx-auto">
+                  <input
+                    {...register("phoneNumber")}
+                    className="w-full px-6 py-4 font-medium text-center text-gray-800 transition-all duration-200 border-2 border-gray-200 bg-gray-50 rounded-xl focus:border-emerald-500 focus:bg-white"
+                    type="text"
+                    placeholder="+251 9XX XXX XXX"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex items-center justify-between mt-8">
+          <button
+            type="button"
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            className="flex items-center gap-2 px-6 py-3 font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft className="w-5 h-5" />
+            Previous
+          </button>
+
+          {currentPage < totalPages ? (
             <button
               type="button"
               onClick={handleNext}
-              className="px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
+              className="flex items-center gap-2 px-6 py-3 font-semibold text-white transition-all duration-200 transform bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl hover:from-emerald-600 hover:to-teal-600 hover:scale-105"
             >
               Next
+              <ChevronRight className="w-5 h-5" />
             </button>
-          )}
-          {currentPage === totalPages && (
+          ) : (
             <button
               type="submit"
-              className="px-4 py-2 bg-green-900 text-white rounded-md hover:bg-green-600"
               disabled={isPending}
+              className="flex items-center gap-2 px-8 py-3 font-semibold text-white transition-all duration-200 transform shadow-lg bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl hover:from-emerald-600 hover:to-teal-600 hover:scale-105 disabled:opacity-75 disabled:cursor-not-allowed"
             >
-              {isPending ? "Submitting" : "Submit"}
+              {isPending ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Creating Listing...
+                </>
+              ) : (
+                <>
+                  <Check className="w-5 h-5" />
+                  Create Listing
+                </>
+              )}
             </button>
           )}
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 

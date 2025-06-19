@@ -1,7 +1,8 @@
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+"use client";
+
+import { Phone, Calendar, MessageCircle } from "lucide-react";
 import { formatDate } from "./utils/helpers";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getLister } from "../../services/HouseApi";
 import { useQuery } from "@tanstack/react-query";
 
@@ -18,39 +19,46 @@ function Tour({ home, setIsTourFormOpened }) {
   function handleOpenMessagePage() {
     navigate(`/manage-rentals/messages/${userId}/${id}`);
   }
-  // /message-for/:homeName/:houseId/with/:listerId
 
   return (
-    <div
-      className="space-y-3 flex flex-col px-2 py-2 
-        justify-center sm:border z-[9998] sm:border-gray-400 rounded-lg text-sm font-bold"
-    >
-      {/* Visible only on screens larger than 'sm' */}
-      <div className="hidden sm:block">
-        <p className="text-lg text-center font-light">Contact this Property</p>
+    <div className="overflow-hidden bg-white border border-gray-200 shadow-xl rounded-2xl">
+      <div className="px-6 py-4 bg-gradient-to-r from-green-600 to-emerald-600">
+        <h3 className="text-xl font-bold text-center text-white">
+          Contact this Property
+        </h3>
       </div>
-      {/* Always visible */}
-      <div className="sm:flex sm:gap-4 mx-auto justify-center">
-        <button
-          className="bg-green-800 text-gray-50 rounded-lg px-4 py-1"
-          onClick={() => setIsTourFormOpened(true)}
-        >
-          Request a tour
-        </button>
-        <button
-          className="border border-green-800 rounded-lg px-4 py-1"
-          onClick={handleOpenMessagePage}
-        >
-          Send message
-        </button>
-      </div>
-      {/* Visible only on screens larger than 'sm' */}
-      <div className="hidden sm:flex items-center justify-center border-b border-gray-300 py-2 text-blue-400 font-light text-lg">
-        <FontAwesomeIcon icon={faPhone} style={{ height: "20px" }} flip />
-        <p className=" text-center">{phoneNumber}</p>
-      </div>
-      <div className="hidden sm:block mt-4 bg-green-300 text-black text-center py-3 font-light">
-        Listed At : {createdAt}
+
+      <div className="p-6 space-y-6">
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button
+            className="flex items-center justify-center flex-1 gap-2 px-6 py-3 font-semibold text-white transition-colors duration-200 bg-green-600 shadow-lg hover:bg-green-700 rounded-xl hover:shadow-xl"
+            onClick={() => setIsTourFormOpened(true)}
+          >
+            <Calendar className="w-5 h-5" />
+            Request a tour
+          </button>
+          <button
+            className="flex items-center justify-center flex-1 gap-2 px-6 py-3 font-semibold text-green-600 transition-colors duration-200 border-2 border-green-600 hover:bg-green-50 rounded-xl"
+            onClick={handleOpenMessagePage}
+          >
+            <MessageCircle className="w-5 h-5" />
+            Send message
+          </button>
+        </div>
+
+        <div className="hidden sm:block">
+          <div className="flex items-center justify-center gap-3 py-4 border-t border-gray-200">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Phone className="w-5 h-5 text-blue-600" />
+            </div>
+            <p className="text-lg font-semibold text-gray-700">{phoneNumber}</p>
+          </div>
+        </div>
+
+        <div className="hidden p-4 text-center border border-green-200 sm:block bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+          <p className="mb-1 text-sm text-gray-600">Listed on</p>
+          <p className="font-semibold text-gray-800">{createdAt}</p>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { faBookmark as faBookmarkSolid } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+"use client";
+
+import { Bookmark } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   fetchBookmarkStatus,
@@ -54,37 +54,65 @@ function OverView({ home }) {
   }
 
   return (
-    <div className="mt-12   px-4 py-4 bg-gray-50">
-      <p className="flex justify-center text-2xl font-extrabold mb-8">
-        {title}
-      </p>
-      <div className="flex justify-around flex-wrap">
-        <div className="flex gap-12 font-bold">
-          <div>
-            <p>{price} Birr</p>
-            <p className="font-light">
-              {city}, {principalSubdivision}, <br />
-              {countryName}
+    <div className="py-12 bg-gradient-to-br from-white to-gray-50">
+      <div className="max-w-6xl px-6 mx-auto">
+        <div className="mb-8 text-center">
+          <h1 className="mb-6 text-4xl font-bold leading-tight text-gray-800 md:text-5xl">
+            {title}
+          </h1>
+        </div>
+
+        <div className="p-8 mb-8 bg-white border border-gray-200 shadow-xl rounded-2xl">
+          <div className="grid grid-cols-2 gap-6 text-center md:grid-cols-4">
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-green-600">{price}</div>
+              <div className="text-sm font-medium text-gray-500">
+                Birr/month
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">{bedRooms}</div>
+              <div className="text-sm font-medium text-gray-500">Bedrooms</div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-purple-600">
+                {bathRooms}
+              </div>
+              <div className="text-sm font-medium text-gray-500">Bathrooms</div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-orange-600">
+                {squareFeet}
+              </div>
+              <div className="text-sm font-medium text-gray-500">Sq Ft</div>
+            </div>
+          </div>
+
+          <div className="pt-6 mt-6 text-center border-t border-gray-200">
+            <p className="font-medium text-gray-600">
+              {city}, {principalSubdivision}, {countryName}
             </p>
           </div>
-          <p>{bedRooms} beds</p>
-          <p className="border-b-2 h-[23px] border-dashed border-current border-gray-600">
-            {bathRooms} baths
-          </p>
-          <p>{squareFeet} sqft</p>
         </div>
-      </div>
 
-      <div
-        className="text-green-700 mt-4 font-bold text-xl flex gap-3 justify-center  items-center"
-        onClick={handleClickLike}
-      >
-        {!isBookmarked ? (
-          <FontAwesomeIcon icon={faBookmark} style={{ height: "25px" }} />
-        ) : (
-          <FontAwesomeIcon icon={faBookmarkSolid} style={{ height: "25px" }} />
-        )}
-        <p>Add to Bookmarks</p>
+        <div className="text-center">
+          <button
+            onClick={handleClickLike}
+            className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+              isBookmarked
+                ? "bg-green-600 text-white hover:bg-green-700"
+                : "bg-white text-green-600 border-2 border-green-600 hover:bg-green-50"
+            }`}
+          >
+            <Bookmark
+              className={`h-6 w-6 ${isBookmarked ? "fill-current" : ""}`}
+            />
+            <span>{isBookmarked ? "Bookmarked" : "Add to Bookmarks"}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
